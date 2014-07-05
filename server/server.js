@@ -1,5 +1,4 @@
 var Hapi = require('hapi');
-var Store = require('./../data');
 var routes = require('./routes/routes');
 
 var server_options = {
