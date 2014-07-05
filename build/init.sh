@@ -1,5 +1,5 @@
 ## Install the additional packages ##
-sudo apt-get install -y python-software-properties nano git
+sudo apt-get install -y python-software-properties nano git curl
 
 ## Install nodejs ##
 sudo add-apt-repository ppa:chris-lea/node.js
