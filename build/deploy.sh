@@ -1,4 +1,4 @@
 cd /home/kp-web && \
   npm install && \
-  gulp && \
+  gulp -p && \
   naught deploy --worker-count 2

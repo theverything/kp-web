@@ -19,8 +19,16 @@
 
 'use strict';
 
-var isProduction = function () {
-  return !!(process.env.NODE_ENV === 'production');
+var program = require('commander');
+var isProduction;
+
+program
+  .version('0.0.1')
+  .option('-p, --production', 'production build')
+  .parse(process.argv);
+
+if (program.production) {
+  isProduction = true;
 }
 
 // Include Gulp & Tools We'll Use
@@ -71,7 +79,7 @@ gulp.task('styles:css', function () {
 gulp.task('styles:scss', function () {
   return gulp.src(paths.scss)
     .pipe($.rubySass({
-      style: isProduction() ? 'compressed' : 'expanded',
+      style: isProduction ? 'compressed' : 'expanded',
       precision: 10,
       loadPath: ['src/styles']
     }))
@@ -135,7 +143,8 @@ gulp.task('clean', del.bind(null, ['dist']));
 
 // Build Production Files, the Default Task
 gulp.task('default', ['clean'], function (cb) {
-  if (isProduction()) {
+  $.util.log('NODE_ENV: ', + isProduction ? "production" : "development");
+  if (isProduction) {
     runSequence('styles', ['images', 'build'], cb);
   } else {
     runSequence('styles', ['images', 'webpack:build-dev', 'server'], cb);
