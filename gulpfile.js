@@ -138,7 +138,15 @@ gulp.task('default', ['clean'], function (cb) {
   if (isProduction()) {
     runSequence('styles', ['images', 'build'], cb);
   } else {
-    runSequence('styles', ['images', 'webpack:build-dev'], cb);
+    runSequence('styles', ['images', 'webpack:build-dev', 'server'], cb);
   }
 });
+
+gulp.task('server', $.shell.task([
+  'naught start --worker-count 1 --daemon-mode false app.js'
+]));
+
+gulp.task('deploy', $.shell.task([
+  'ssh root@192.241.210.151 "cd /home/kp-web/build && cat deploy.sh | sh"'
+]));
 
