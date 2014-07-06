@@ -147,6 +147,8 @@ gulp.task('server', $.shell.task([
 ]));
 
 gulp.task('deploy', $.shell.task([
-  'ssh root@192.241.210.151 "cd /home/kp-web/build && cat deploy.sh | sh"'
+  'ssh root@192.241.210.151' +
+  '"cd /home/kp-web && git pull && ' +
+  'cd /home/kp-web/build && cat deploy.sh | sh"'
 ]));
 
