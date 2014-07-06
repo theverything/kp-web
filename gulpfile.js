@@ -19,6 +19,13 @@
 
 'use strict';
 
+// Include Gulp & Tools We'll Use
+var gulp = require('gulp');
+var $ = require('gulp-load-plugins')();
+var del = require('del');
+var runSequence = require('run-sequence');
+var webpack = require("webpack");
+var livereload = require('gulp-livereload');
 var program = require('commander');
 var isProduction;
 
@@ -30,13 +37,6 @@ program
 if (program.production) {
   isProduction = true;
 }
-
-// Include Gulp & Tools We'll Use
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
-var del = require('del');
-var runSequence = require('run-sequence');
-var webpack = require("webpack");
 
 var webpackConfig = {
     context: __dirname + "/src/scripts",
@@ -50,7 +50,7 @@ var webpackConfig = {
 
 var paths = {
   js: ['src/scripts/**/*.js'],
-  scss: ['src/styles/**/*.scss', '!src/styles/components/components.scss'],
+  scss: ['src/styles/**/*.scss'],
   css: ['src/styles/**/*.css'],
   images: ['src/images/**/*'],
   html: ['src/**/*.html']
@@ -147,8 +147,22 @@ gulp.task('default', ['clean'], function (cb) {
   if (isProduction) {
     runSequence('styles', ['images', 'build'], cb);
   } else {
-    runSequence('styles', ['images', 'webpack:build-dev', 'server'], cb);
+    runSequence('styles', ['images', 'webpack:build-dev', 'server', 'watch'], cb);
   }
+});
+
+gulp.task('watch', function () {
+
+  gulp.src(paths.scss)
+  .pipe($.watch(function () {
+    gulp.run('styles:scss');
+  }));
+
+  gulp.src(paths.js)
+  .pipe($.watch(function () {
+    gulp.run('webpack:build-dev');
+  }));
+
 });
 
 gulp.task('server', $.shell.task([
