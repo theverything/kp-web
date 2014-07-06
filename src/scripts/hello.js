@@ -1,3 +1,3 @@
 module.exports = function () {
-  alert("Hello world");
+  alert("Kat Park");
 };
