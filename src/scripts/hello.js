@@ -1,3 +1,3 @@
 module.exports = function () {
-  alert("hello");
+  alert("Hello world");
 };
