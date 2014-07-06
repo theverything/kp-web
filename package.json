@@ -4,7 +4,8 @@
   "description": "A test smtp server",
   "main": "app.js",
   "scripts": {
-    "start": "naught start --worker-count 2 --daemon-mode false app.js",
+    "start-dev": "naught start --worker-count 1 --daemon-mode false app.js",
+    "start": "naught start --worker-count 2 app.js",
     "deploy": "ssh root@192.241.210.151 'cd /home/kp-web/build && deploy.sh sh'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
