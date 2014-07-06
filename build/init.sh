@@ -17,18 +17,21 @@ sudo /etc/init.d/mongod start
 ## Install Ruby ##
 sudo apt-add-repository ppa:brightbox/ruby-ng
 sudo apt-get update
+sudo apt-get install -y ruby
 
 ## Install npm packages ##
 npm install -g naught gulp forever
 
 ## Install Gems ##
-gem install sass
+gem install sass --no-ri --no-rdoc
 
 ## Add ENV vars ##
-echo "export NODE_ENV=production"
+echo $'\nexport NODE_ENV=production' \
+$'\nexport NODE_HOST=0.0.0.0'\
+$'\nexport NODE_PORT=80' >> ~/.bashrc
 
 ## Install the app ##
-cd /home && https://github.com/theverything/kp-web.git kp-web
-cd /home && \
+cd /home && git clone https://github.com/theverything/kp-web.git kp-web
+cd /home/kp-web && \
     npm install && \
     gulp
